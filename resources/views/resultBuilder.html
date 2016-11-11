@@ -1,0 +1,45 @@
+<h3 ng-show="resultPanel.length > 0">Result</h3>
+<div class="table table-striped om-table">
+    <div ng-repeat="p in resultPanel">
+        <div ng-if="p.isNestedTable" class="panel panel-default">
+            <div class="panel-heading">{{p.name}}</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="selector"> Filter</label>
+                    <input type="text" class="form-control" ng-model="search">
+                </div>
+                <table ng-if="p.isNestedTable" class="table table-striped om-table result-table">
+                    <tr>
+                        <th ng-repeat="(key,value) in p.nestedTable[0]">
+                            {{key}}
+                        </th>
+                    </tr>
+                    <tr ng-repeat="item in p.nestedTable| filter:search">
+                        <td ng-repeat="(k,v) in item">
+                            {{v}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div ng-if="p.isNestedPanels">
+            <div ng-repeat="item in p.nestedPanels" class="panel panel-default">
+                <div class="panel-heading"> {{item.name}} </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(k,v) in item.nestedList">
+                            <b>{{k}}</b>: {{v}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ng-if="p.isNestedList">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="(k,v) in p.nestedList">
+                    <b>{{k}}</b>: {{v}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="om-app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Logo Nav - Start Bootstrap Template</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/om-style.css">
+    <!-- Custom CSS -->
+    <link href="css/logo-nav.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+    <!--<![endif]&ndash;&gt;-->
+</head>
+
+<body class="om">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <h1 style="color:white;">OM</h1>
+    </nav>
+    <!-- Page Content -->
+    <div class="om-container" ng-controller="userDetailsCtrl">
+        <div class="col-md-3">
+            <h3>Saved</h3>
+            <div class="list-group">
+                <a ng-class="{'active' : s.active, 'list-group-item': true}" ng-repeat="s in store" ng-click="controller.savedItemClick(s)" style="cursor:pointer;">
+                    <span class="badge" ng-click="controller.removeSavedItem(s)"> 
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </span>
+                    {{s.url}}
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <form>
+                    <div class="form-group">
+                        <label for="host">Host</label>
+                        <input type="text" class="form-control" id="host" ng-model="host" placeholder="localhost" value="http://192.168.10.110:8989">
+                    </div>
+                    <div class="form-group">
+                        <label for="selector"> Method</label>
+                        <select class="form-control" id="selector" ng-model="method">
+                            <option>GET</option>
+                            <option>POST</option>
+                            <option>PATH</option>
+                            <option>DELETE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Services URL</label>
+                        <input type="text" ng-model="urlInput" ng-change="controller.urlChange(urlInput)" class="form-control" placeholder="/om/v1/admin/dataResources/{resourceName}">
+                    </div>
+                    <div class="form-group" ng-hide="parameters.length == 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Parameters</div>
+                            <div class="panel-body">
+                                <table class="table table-striped om-table">
+                                    <tr>
+                                        <th>Parameter name</th>
+                                        <th>Parameter value</th>
+                                    </tr>
+                                    <tr ng-repeat="p in parameters">
+                                        <td>{{ p.name }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Value" ng-model="p.value">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" ng-click="controller.submitRequest()" class="btn btn-primary">Send</button>
+                            <button type="button" class="btn btn-default" ng-click="controller.saveOnStore()">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <div class="row">
+                <h3 ng-show="resultPanel.length > 0">Result</h3>
+                <div class="table table-striped om-table">
+                    <div ng-repeat="p in resultPanel">
+                        <div ng-if="p.isNestedTable" class="panel panel-default">
+                            <div class="panel-heading">{{p.name}}</div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="selector"> Filter</label>
+                                    <input type="text" class="form-control" ng-model="search">
+                                </div>
+                                <table ng-if="p.isNestedTable" class="table table-striped om-table result-table">
+                                    <tr>
+                                        <th ng-repeat="(key,value) in p.nestedTable[0]">
+                                            {{key}}
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="item in p.nestedTable| filter:search">
+                                        <td ng-repeat="(k,v) in item">
+                                            {{v}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="p.isNestedPanels">
+                            <div ng-repeat="item in p.nestedPanels" class="panel panel-default">
+                                <div class="panel-heading"> {{item.name}} </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="(k,v) in item.nestedList">
+                                            <b>{{k}}</b>: {{v}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="p.isNestedList">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="(k,v) in p.nestedList">
+                                    <b>{{k}}</b>: {{v}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="../target/scala-2.11/om-soap-fastopt.js"></script>
+    <!--<script src="../target/scala-2.11/scala-js-tutorial-fastopt.js"></script>-->
+    <script src="angular.min.js"></script>
+    <!--<script src="../target/scala-2.11/om-soap-launcher.js"></script>-->
+    <script !src="">
+    OM.MainApp().main()
+    </script>
+</body>
+
+</html>

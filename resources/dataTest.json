@@ -1,0 +1,159 @@
+{
+  "dataResource": [
+    {
+      "name": "System",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/system"
+    },
+    {
+      "name": "comercialOfficeMapping",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/comercialOfficeMapping"
+    },
+    {
+      "name": "PartyDocumentType",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/partyDocument"
+    },
+    {
+      "name": "UYState",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/uyState"
+    },
+    {
+      "name": "mdm:poffcls:id:1",
+      "versionMethod": "none",
+      "sourceType": "xml",
+      "path": "/om/data/catalog/productClassifCatalogs/category/prodClassifCategoria.xml"
+    },
+    {
+      "name": "mdm:poffcls:id:150",
+      "versionMethod": "none",
+      "sourceType": "xml",
+      "path": "/om/data/catalog/productClassifCatalogs/equipment/prodClassifEquipos.xml"
+    },
+    {
+      "name": "Locality",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/locality"
+    },
+    {
+      "name": "Country",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/country"
+    },
+    {
+      "name": "stores",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/stores"
+    },
+    {
+      "name": "mdm:prdcat:id:18",
+      "versionMethod": "validDate",
+      "sourceType": "productOffering",
+      "path": "/om/data/catalog/productOfferCatalogs/mdm-prdcat-id-18"
+    },
+    {
+      "name": "backoffice",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/backoffice"
+    },
+    {
+      "name": "Currency",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/currency"
+    },
+    {
+      "name": "colors",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/colors"
+    },
+    {
+      "name": "UnitsOfMeasure",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/unitsOfMeasure"
+    },
+    {
+      "name": "soap-obtenerEventosIsDelivered",
+      "versionMethod": "none",
+      "sourceType": "xml",
+      "path": "/om/config/templates/op/soap-obtenerEventosIsDelivered.xml"
+    },
+    {
+      "name": "backofficeTest",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/backofficeTest"
+    },
+    {
+      "name": "spec-obtenerEventosIsDelivered",
+      "versionMethod": "none",
+      "sourceType": "xml",
+      "path": "/om/config/spec/op/spec-obtenerEventosIsDelivered.xml"
+    },
+    {
+      "name": "mdm:prdcat:id:12",
+      "versionMethod": "validDate",
+      "sourceType": "productOffering",
+      "path": "/om/data/catalog/productOfferCatalogs/mdm-prdcat-id-12"
+    },
+    {
+      "name": "comercialOffice",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/comercialOffice"
+    },
+    {
+      "name": "storeAndBackofficeByState",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/storeAndBackofficeByState"
+    },
+    {
+      "name": "orderBodyTemplate",
+      "versionMethod": "none",
+      "sourceType": "ftl",
+      "path": "resources/orderBodyTemplate.ftl"
+    },
+    {
+      "name": "storesTest",
+      "versionMethod": "majorMinor",
+      "sourceType": "genericCode",
+      "path": "/refcatalog/data/catalog/storesTest"
+    },
+    {
+      "name": "dataResourcesCatalog",
+      "versionMethod": "none",
+      "sourceType": "xml",
+      "path": "/om/data/dataResourcesCatalog.xml"
+    },
+    {
+      "name": "orderSubjectTemplate",
+      "versionMethod": "none",
+      "sourceType": "ftl",
+      "path": "resources/orderSubjectTemplate.ftl"
+    },
+    {
+      "name": "mdm:prdcat:id:4",
+      "versionMethod": "validDate",
+      "sourceType": "productOffering",
+      "path": "/om/data/catalog/productOfferCatalogs/mdm-prdcat-id-4"
+    }
+  ],
+  "results": {
+    "200": {
+      "description": "pepito fué a la verduleria"
+    }
+  }
+}

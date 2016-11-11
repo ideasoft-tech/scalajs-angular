@@ -1,0 +1,40 @@
+<form>
+    <div class="form-group">
+        <label for="host">Host</label>
+        <input type="text" class="form-control" id="host" ng-model="host" placeholder="localhost" value="http://192.168.10.110:8989">
+    </div>
+    <div class="form-group">
+        <label for="selector"> Method</label>
+        <select class="form-control" id="selector" ng-model="method">
+            <option>GET</option>
+            <option>POST</option>
+            <option>PATH</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Services URL</label>
+        <input type="text" ng-model="urlInput" ng-change="controller.urlChange(urlInput)" class="form-control" placeholder="/om/v1/admin/dataResources/{resourceName}">
+    </div>
+    <div class="form-group" ng-hide="parameters.length == 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">Parameters</div>
+            <div class="panel-body">
+                <table class="table table-striped om-table">
+                    <tr>
+                        <th>Parameter name</th>
+                        <th>Parameter value</th>
+                    </tr>
+                    <tr ng-repeat="p in parameters">
+                        <td>{{ p.name }}</td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Value" ng-model="p.value">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" ng-click="controller.submitRequest()" class="btn btn-primary">Send</button>
+    </div>
+</form>
