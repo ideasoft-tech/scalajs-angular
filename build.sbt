@@ -19,5 +19,6 @@ jsDependencies ++= Seq(
   "org.webjars" % "angularjs" % "1.3.14" / "angular-route.js" dependsOn "angular.js"
 )
 
-val a = project.in(file(".")).enablePlugins(ScalaJSPlugin)
+val a = project.in(file("."))
+  .enablePlugins(ScalaJSPlugin)
 

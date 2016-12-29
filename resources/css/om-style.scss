@@ -1,33 +1,4 @@
-.om {
-    .om-table {
-        tbody {
-            tr {
-                td {
-                    vertical-align: middle;
-                    background: white;
-                }
-                th {
-                    // background: #E3F2FD;
-                    padding: 3px;
-                }
-            }
-        }
-        &.result-table {
-            max-height: 200px;
-        }
-    }
-
-    .om-container{
-        margin-right: 20px;
-    }
-    .panel-default>.panel-heading {
-       /*  background: #2196F3;
-        color: white;
-        padding: 5px 5px;*/
-        font-weight: bold; 
-    }
-    .form-control {
-        height: 28px;
-        &input {}
-    }
+.menu-leaf,
+.header {
+    cursor: pointer;
 }

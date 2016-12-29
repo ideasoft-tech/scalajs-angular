@@ -1,7 +1,7 @@
 package OM.scope
 
-import OM.utils.Datatypes.{ParameterInput, StoreModel}
-import OM.utils.Panel
+import OM.model.ApiClient.BasicEnvironment
+import OM.model.{OMModel, TreeMenu}
 import com.greencatsoft.angularjs.core.Scope
 
 import scala.scalajs.js
@@ -12,22 +12,30 @@ import scala.scalajs.js
 @js.native
 trait OMScope extends Scope {
 
-  var name: String = js.native
+  // contexto
+  var context: BasicEnvironment = js.native
+  var groupSelected: String = js.native
+  var envSelected: String = js.native
 
-  var host: String = js.native
+  // para manejar los distintos templates
+  var templateURL: String = js.native
 
-  var searchFilter: String = js.native
+  // SERVICIO
+  var services: js.Array[OMModel] = js.native
+  var serviceSelected: OMModel = js.native
+  var serviceID: String = js.native
 
-  var method: String = js.native
+  //  var serviceModel: js.Array[UIModel] = js.native
 
-  var urlInput: String = js.native
+  // MENU
+  var menuSpec: TreeMenu = js.native
 
-  var resultPanel: js.Array[Panel] = js.native
+  // RESULTADOS
+  var showResult: Boolean = js.native
+  var activeLoader: Boolean = js.native
 
-  var parameters: js.Array[ParameterInput] = js.native
-
-  var store: js.Array[StoreModel] = js.native
-
-  var itemActive: StoreModel = js.native
+  var plainResult: String = js.native
+  var formatResult: String = js.native
+  var detailsResult: String = js.native
 
 }

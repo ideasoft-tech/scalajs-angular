@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAIgB,yBAAG,CACC,cAAc,CAAE,MAAM,CACtB,UAAU,CAAE,KAAK,CAErB,yBAAG,CAEC,OAAO,CAAE,GAAG,CAIxB,0BAAe,CACX,UAAU,CAAE,KAAK,CAIzB,iBAAa,CACT,YAAY,CAAE,IAAI,CAEtB,iCAA8B,CAI1B,WAAW,CAAE,IAAI,CAErB,iBAAc,CACV,MAAM,CAAE,IAAI",
+"mappings": "AAAA;OACQ;EACJ,MAAM,EAAE,OAAO",
 "sources": ["om-style.scss"],
 "names": [],
 "file": "om-style.css"

@@ -1,0 +1,22 @@
+<h5 class="ui header">
+    Contexto
+</h5>
+
+<div class="ui form">
+    <div class="field">
+        <label>Grupo</label>
+        <select class="ui search dropdown" ng-model="groupSelected">
+            <option ng-repeat="group in contextModel.getGroups" value="{{group}}">{{group}}</option>
+        </select>
+    </div>
+    <div class="grouped fields">
+        <label>Ambientes</label>
+        <div class="field" ng-repeat="env in contextModel.getEnvs(groupSelected)">
+            <div class="ui radio checkbox" >
+                <input type="radio" name="env" ng-checked="$index==0" ng-click="controller.setEnv(env)">
+                <label>{{env}}</label>
+            </div>
+        </div>
+    </div>
+
+</div>

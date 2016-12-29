@@ -1,0 +1,67 @@
+<!--TITULO -->
+<h1 class="ui header field">{{uiModel.name}}</h1>
+
+<!-- DESCRIPCION -->
+
+
+<div class="ui stacked segment ">
+    <h5 class="ui top header">Descripción</h5>
+    <div class="">{{uiModel.description}}</div>
+</div>
+
+<!-- HEADERS -->
+
+<div class="ui vertical segment red field">
+
+    <h5 class="ui top header">Headers</h5>
+
+    <div class="ui form">
+        <div class="three fields" ng-repeat="headers in uiModel.headers">
+            <div class="field">
+                <input type="text" placeholder="Nombre" ng-model="headers.key">
+            </div>
+            <div class="field">
+                <input type="text" placeholder="Valor" ng-model="headers.value">
+            </div>
+            <button class="ui icon button" ng-click="controller.removeHeaderRow($index)">
+                Remover
+            </button>
+        </div>
+    </div>
+    <button class="ui button" ng-click="controller.addHeaderRow()">
+        Agregar
+    </button>
+
+</div>
+
+
+<div ng-repeat="item in uiModel.requiredFields">
+
+    <div class="field" ng-include="'./views/textfield.html'" ng-show="item.uiType()=='textfield'" ng-init="data=item"></div>
+
+    <div class="field" ng-include="'./views/description.html'" ng-show="item.uiType()=='description'" ng-init="data=item"></div>
+
+    <div class="field" ng-include="'./views/file.html'" ng-show="item.uiType()=='file'" ng-init="data=item"></div>
+
+    <div class="field" ng-include="'./views/combobox.html'" ng-show="item.uiType()=='combobox'" ng-init="data=item"></div>
+
+    <div class="field" ng-include="'./views/payloadXML.html'" ng-init="payload=item" ng-show="item.uiType()=='payloadXML'"></div>
+
+    <div class="field ui form vertical segment red" ng-show="item.uiType()=='panel'">
+        <h5 class="ui header">{{item.label}}</h5>
+        <div class="field" ng-repeat="panelItem in item.content">
+
+            <div class="field" ng-include="'./views/textfield.html'" ng-show="panelItem.uiType()=='textfield'" ng-init="data=panelItem"></div>
+
+            <div class="field" ng-include="'./views/description.html'" ng-show="panelItem.uiType()=='description'" ng-init="data=panelItem"></div>
+
+            <div class="field" ng-include="'./views/file.html'" ng-show="panelItem.uiType()=='file'" ng-init="data=panelItem"></div>
+
+            <div class="field" ng-include="'./views/combobox.html'" ng-show="panelItem.uiType()=='combobox'" ng-init="data=panelItem"></div>
+
+            <div class="field" ng-include="'./views/payloadXML.html'" ng-show="panelItem.uiType()=='payloadXML'" ng-init="payload=panelItem"></div>
+
+        </div>
+    </div>
+</div>
+

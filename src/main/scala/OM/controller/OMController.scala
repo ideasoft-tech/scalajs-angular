@@ -1,172 +1,192 @@
 package OM.controller
 
+import OM.model._
 import OM.scope.OMScope
-import OM.utils.Datatypes.{ParameterInput, StoreModel}
-import OM.utils.{Datatypes, Panel}
-import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
-import com.greencatsoft.angularjs.{AbstractController, injectable}
-import org.scalajs.dom
+import OM.utils.Panel
+import OM.{JSON, OMHttpConfig, OMHttpService}
+import com.greencatsoft.angularjs._
+import com.greencatsoft.angularjs.core.HttpConfig
+import org.scalajs.dom.raw.HTMLInputElement
+import org.scalajs.dom.{Event, FileReader, UIEvent}
 import upickle._
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.{JSRichGenMap, JSRichGenTraversableOnce}
-import scala.scalajs.js.JSON
 import scala.scalajs.js.annotation.JSExport
 
 /**
   * Created by jvelazquez on 11/4/2016.
   */
-@JSExport
+
+
 @injectable("userDetailsCtrl")
-class OMController(scope: OMScope, http: HttpService) extends AbstractController[OMScope](scope) {
+class OMController(scope: OMScope, http: OMHttpService) extends AbstractController[OMScope](scope) {
 
   lazy val parametersRegex = """{[a-z|A-Z|0-9]+}""".r
   val storageKey = "OM-History-Rest"
 
+
   override def initialize(): Unit = {
     super.initialize()
 
-    scope.name = ""
-    scope.searchFilter = ""
-    scope.host = "http://192.168.10.110:8989"
-    scope.urlInput = ""
-    scope.method = "GET"
-    scope.parameters = js.Array()
-    scope.resultPanel = js.Array()
-    scope.store = js.Array()
 
-    val value = dom.window.localStorage.getItem(storageKey)
+    scope.services = EnviromentSpec.spec
 
-    if (value != null) {
-      scope.store = json.read(value).arr.map(x => Datatypes.toStoreModel(x)).toJSArray
+    scope.serviceID = scope.services.head.soapName
 
-      if (scope.store.nonEmpty) {
-        updateScope(scope.store(0))
+    scope.serviceSelected = scope.services.head
+
+    scope.templateURL = "./views/builder.html"
+
+    scope.menuSpec = TreeMenuBuilder.build(scope.services)
+
+    scope.context = EnviromentSpec.context
+
+    scope.groupSelected = scope.context.getGroups(0)
+
+    scope.envSelected = null
+
+    scope.showResult = false
+    scope.activeLoader = false
+
+  }
+
+
+  @JSExport
+  def serviceChange() = {
+    scope.serviceSelected = scope.services.find(p => p.getID == scope.serviceID).orNull
+
+    val scopeSelection = scope.serviceID
+    scope.templateURL = s"./views/builder.html?$scopeSelection"
+  }
+
+  @JSExport
+  def setService(servicesID: String) = {
+
+    scope.showResult = false
+    scope.serviceID = servicesID
+    scope.serviceSelected = scope.services.find(p => p.getID == scope.serviceID).orNull
+
+    val scopeSelection = scope.serviceID
+    scope.templateURL = s"./views/builder.html?$scopeSelection"
+    println(scope.templateURL)
+  }
+
+
+  @JSExport
+  def setFiles(element: Event) = {
+
+    val value = element.target.asInstanceOf[HTMLInputElement].value
+    val payloadComponent = scope.serviceSelected.getPayloadComponent
+
+    if (payloadComponent.isSuccess) {
+
+      payloadComponent.get.value = value
+
+      val reader = new FileReader()
+
+      reader.onload = (e: UIEvent) => {
+        payloadComponent.get.value = reader.result.asInstanceOf[String]
       }
+
+      reader.readAsText(element.target.asInstanceOf[HTMLInputElement].files(0))
     }
   }
 
   @JSExport
-  def urlChange(newValue: String) = {
-    val newParams = parametersRegex.findAllMatchIn(newValue).map(f => {
-
-      val filter = scope.parameters.filter(x => x.name == f.toString)
-
-      if (filter.isEmpty) {
-        new ParameterInput(f.toString, "")
-      } else {
-        filter.head
-      }
-    }
-    ).toJSArray
-
-    scope.parameters = newParams
-  }
-
-
-  @JSExport
-  def removeSavedItem(storeModel: StoreModel) = {
-
-    scope.store = scope.store.filterNot(x => x.url == storeModel.url)
-
-    dom.window.localStorage.setItem(storageKey, JSON.stringify(scope.store))
+  def addHeaderRow(): Unit = {
+    scope.serviceSelected.headers.push(new HeaderModel(null, null))
   }
 
   @JSExport
-  def saveOnStore() = {
-
-    val newStore = new StoreModel(
-      scope.host,
-      scope.method,
-      scope.urlInput,
-      scope.parameters
-    )
-
-    scope.store += newStore
-
-    dom.window.localStorage.setItem(storageKey, JSON.stringify(scope.store))
+  def removeHeaderRow(index: Int): Unit = {
+    scope.serviceSelected.headers.splice(index, 1);
   }
 
   @JSExport
-  def savedItemClick(storeModel: StoreModel) = {
-    if (scope.itemActive != null) {
-      scope.itemActive.active = false
-    }
+  def setEnv(env: String) = {
+    scope.envSelected = env
 
-    updateScope(storeModel)
   }
-
 
   @JSExport
   def submitRequest() = {
+    scope.activeLoader = true
 
-    val finalUrl = scope.parameters.foldLeft(scope.urlInput)(
-      (accum: String, p: ParameterInput) => {
-        accum.replace(p.name, p.value toString)
-      }
-    )
+    val httpConfig = buildRestCall(scope.serviceSelected)
 
-    invokeService(scope.host + finalUrl)
-    //    invokeService("dataTest.json")
-  }
+    scope.detailsResult = JSON.stringify(httpConfig.asInstanceOf[HttpConfig], null, 4)
 
-  private def updateScope(storeModel: StoreModel) = {
+    httpConfig.method match {
+      case "GET" =>
+        http.get(httpConfig.url, httpConfig)
+          .success(successInvoke)
+          .error(errorCallback)
 
-    storeModel.active = true
+      case "POST" =>
+        http.post(httpConfig.url, httpConfig.data, httpConfig)
+          .success(successInvoke)
+          .error(errorCallback)
 
-    scope.host = storeModel.host
-    scope.method = storeModel.method
-    scope.urlInput = storeModel.url
-    scope.parameters = storeModel.parameterInput
+      case "PATCH" =>
+        http.patch(httpConfig.url, httpConfig.data, httpConfig)
+          .success(successInvoke)
+          .error(errorCallback)
 
-    scope.itemActive = storeModel
-
-  }
-
-  private def invokeService(url: String) = scope.method match {
-
-    case "GET" => http.get(url).
-      success(successInvoke).
-      error(errorCallback)
-
-    case "POST" => http.post(url).
-      success(successInvoke).
-      error(errorCallback)
-
-    case _ =>
-      val httpConfig = HttpConfig.empty
-      httpConfig.headers = js.Dictionary(
-        "method" -> "PATH"
-      )
-
-      http.head(url, httpConfig).
-        success(successInvoke).
-        error(errorCallback)
-  }
-
-
-  def successInvoke = (data: Any, status: Int) => {
-
-    try {
-
-      data match {
-        case str: String =>
-
-          val a = json.read(str)
-          scope.resultPanel = buildTable(a) toJSArray
-
-        case _ =>
-
-          val dyn = data.asInstanceOf[js.Dynamic]
-          val a = json.read(JSON.stringify(dyn))
-
-          scope.resultPanel = buildTable(a) toJSArray
-      }
-
-    } catch {
-      case e: Exception => println(e.getMessage)
+      case "PUT" =>
+        http.put(httpConfig.url, httpConfig.data, httpConfig)
+          .success(successInvoke)
+          .error(errorCallback)
     }
   }
+
+  private def buildRestCall(oMModel: OMModel): OMHttpConfig = {
+
+    if (scope.envSelected == null) {
+      scope.envSelected = scope.context.getEnvs(scope.groupSelected)(0)
+    }
+
+
+    val httpConfig: OMHttpConfig = new js.Object().asInstanceOf[OMHttpConfig]
+
+    // AMBIENTE
+    val env = scope.context.setCurrent(scope.groupSelected, scope.envSelected)
+
+    val uiModel = scope.serviceSelected
+
+    // obtengo datos del modelo
+
+    val fixedHeaders = oMModel.getFixedHeaders
+    val headers = oMModel.getFixedHeaders
+    val urlParameters = oMModel.getUrlParameters
+    val payload = oMModel.getPayloadComponent
+
+    // GENERO URL
+    val host = env.getVariableValue(scope.groupSelected, "host")
+
+    val tmpUrl = urlParameters.foldLeft(uiModel.url)((acc: String, p: UIModel) => acc.replaceAll(s"{${p.key}}", p.value))
+
+    httpConfig.url = s"$host/$tmpUrl"
+    httpConfig.method = oMModel.method
+    httpConfig.headers = (fixedHeaders ++ headers).toJSDictionary
+
+    if (payload.isSuccess) {
+      httpConfig.data = payload.get.getValue
+    }
+
+    httpConfig
+  }
+
+  def successInvoke = (data: js.Any, status: Int) => {
+
+    scope.showResult = true
+
+    scope.plainResult = JSON.stringify(data)
+    scope.formatResult = JSON.stringify(data, null, 4)
+
+    scope.activeLoader = false
+  }
+
 
   def errorCallback: js.Function2[Any, Int, Unit] = (d: Any, status: Int) => {
     val obj = d.asInstanceOf[js.Dynamic]
@@ -194,8 +214,8 @@ class OMController(scope: OMScope, http: HttpService) extends AbstractController
       panel.isNestedList = true
 
       panel.nestedList = objValue.map(f => {
-        (f._1, f._2.value toString)
-      }) toJSDictionary
+        (f._1, f._2.value.toString)
+      }).toJSDictionary
 
       List(panel)
 
@@ -222,9 +242,9 @@ class OMController(scope: OMScope, http: HttpService) extends AbstractController
 
               panel.nestedTable = vArr.map(f => {
 
-                f.obj.map(h => (h._1, h._2.str)) toJSDictionary
+                f.obj.map(h => (h._1, h._2.str)).toJSDictionary
 
-              }) toJSArray
+              }).toJSArray
 
 
             }
@@ -236,15 +256,15 @@ class OMController(scope: OMScope, http: HttpService) extends AbstractController
               val p = new Panel
 
               p.name = f._1
-              p.nestedList = f._2.obj.map(fPair => (fPair._1, fPair._2.str)) toJSDictionary
+              p.nestedList = f._2.obj.map(fPair => (fPair._1, fPair._2.str)).toJSDictionary
 
               p
 
-            }) toJSArray
+            }).toJSArray
           case _ => Nil
         }
         panel
-      }) toList
+      }).toList
     }
   }
 

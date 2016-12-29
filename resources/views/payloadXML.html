@@ -1,0 +1,19 @@
+<div ng-repeat="parameter in payload.getUIModel">
+
+    <div class="field" ng-include="'./views/textfield.html'" ng-show="parameter.uiType()=='textfield'"
+         ng-init="data=parameter">
+    </div>
+
+    <div class="field" ng-include="'./views/description.html'" ng-show="parameter.uiType()=='description'"
+         ng-init="data=parameter">
+    </div>
+
+    <div class="field" ng-include="'./views/combobox.html'" ng-show="parameter.uiType()=='combobox'"
+         ng-init="data=parameter">
+    </div>
+
+
+
+</div>
+
+<!--<pre class="ui segment" ng-change="payload.getTemplate" ng-model="tmp">{{payload.getTemplate}}</pre>-->

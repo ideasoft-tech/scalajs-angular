@@ -1,0 +1,15 @@
+
+    <i ng-show="menuChildData.children!=undefined" class="folder open outline icon"></i>
+    <i ng-show="menuChildData.children==undefined" class="list layout icon menu-leaf"></i>
+    <div class="content">
+
+        <div ng-show="menuChildData.children!=undefined" class="header" onclick="headerClick(this)">{{menuChildData.label}}</div>
+        <div ng-show="menuChildData.children==undefined" class="header" ng-click="controller.setService(menuChildData.serviceID)">{{menuChildData.label}}</div>
+        <!--<div class="description">Packaged theme files</div>-->
+
+        <div class="list">
+            <div class="item" ng-repeat="c in menuChildData.children" ng-include="'./views/menuChild.html'"
+                 ng-init="menuChildData=c"></div>
+        </div>
+    </div>
+
