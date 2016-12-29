@@ -17,7 +17,7 @@
 <body>
 
 <div class="ui inverted segment attached">
-    <h1 class="ui header">OM Client</h1>
+    <h3 class="ui header">OM Client</h3>
 </div>
 
 <div class="ui grid padded" ng-controller="userDetailsCtrl">
@@ -34,19 +34,22 @@
 
     <div class="nine wide column ">
 
-        <div class="ui form stacked segment blue">
-
-            <div class="field" ng-show="serviceSelected!=undefined" ng-model="serviceSelected"
-                 ng-include="templateURL"
-                 onload="uiModel=serviceSelected"></div>
-
-            <button ng-click="controller.submitRequest()" class="ui primary button field">Enviar
-            </button>
+        <div class="ui top attached tabular menu">
+            <a class="active item" data-tab="firstTab">Definición</a>
+            <a class="item" data-tab="secondTab">Resultado</a>
         </div>
 
+        <div class="ui bottom attached active tab segment" data-tab="firstTab">
 
-        <div class="ui stacked segment blue" ng-show="showResult">
-            <h1 class="ui header field">Resultado</h1>
+            <div class="ui form ">
+                <div class="field" ng-show="serviceSelected!=undefined" ng-model="serviceSelected" ng-include="templateURL" onload="uiModel=serviceSelected"></div>
+
+                <button ng-click="controller.submitRequest()" class="ui primary button field">Enviar</button>
+            </div>
+
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="secondTab">
+
             <div class="ui top attached tabular menu">
                 <a class="item active" data-tab="first">Formateado</a>
                 <a class="item" data-tab="second">Plano</a>
@@ -61,6 +64,7 @@
             <div class="ui bottom attached tab segment" data-tab="third" style="overflow: auto;">
                 <pre>{{detailsResult}}</pre>
             </div>
+
         </div>
     </div>
 </div>
@@ -75,20 +79,6 @@
 
 <script !src="">
     OM.MainApp().main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 </body>
 

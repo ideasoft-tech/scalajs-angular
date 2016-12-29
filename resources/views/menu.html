@@ -1,11 +1,5 @@
-<h5 class="ui  header">
-    Servicios
-</h5>
+<div class="ui header"> Servicios</div>
 
 <div class="ui list ">
-
-    <div class="item" ng-repeat="child in menuData.children" ng-include="'./views/menuChild.html'"
-         ng-init="menuChildData=child"></div>
-
-
+    <div class="item" ng-repeat="child in menuData.children" ng-include="'./views/menuChild.html'" ng-init="menuChildData=child"></div>
 </div>

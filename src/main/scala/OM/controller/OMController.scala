@@ -5,7 +5,6 @@ import OM.scope.OMScope
 import OM.utils.Panel
 import OM.{JSON, OMHttpConfig, OMHttpService}
 import com.greencatsoft.angularjs._
-import com.greencatsoft.angularjs.core.HttpConfig
 import org.scalajs.dom.raw.HTMLInputElement
 import org.scalajs.dom.{Event, FileReader, UIEvent}
 import upickle._
@@ -44,7 +43,7 @@ class OMController(scope: OMScope, http: OMHttpService) extends AbstractControll
 
     scope.groupSelected = scope.context.getGroups(0)
 
-    scope.envSelected = null
+    scope.envSelected = scope.context.getEnvs(scope.groupSelected)(0)
 
     scope.showResult = false
     scope.activeLoader = false
@@ -115,7 +114,7 @@ class OMController(scope: OMScope, http: OMHttpService) extends AbstractControll
 
     val httpConfig = buildRestCall(scope.serviceSelected)
 
-    scope.detailsResult = JSON.stringify(httpConfig.asInstanceOf[HttpConfig], null, 4)
+    scope.detailsResult = JSON.stringify(httpConfig, null, 4)
 
     httpConfig.method match {
       case "GET" =>

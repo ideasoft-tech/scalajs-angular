@@ -3,7 +3,7 @@
 package OM.model
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.genTravConvertible2JSRichGenTrav
+import scala.scalajs.js.JSConverters.{JSRichGenMap, genTravConvertible2JSRichGenTrav}
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 
 @JSExportAll
@@ -47,6 +47,12 @@ object ApiClient {
 
     @JSExport
     def getGroups: js.Array[String] = metadata.keySet.toJSArray
+
+    @JSExport
+    def getVariables(group: String, env: String) = variables.keys
+      .filter(k => k._1 == group && k._3 == env)
+      .map(k => k._2 -> variables((group, k._2, env))).toMap.toJSDictionary
+
 
     @JSExport
     def getEnvs(env: String): js.Array[String] = metadata.getOrElse(env, List()).toJSArray

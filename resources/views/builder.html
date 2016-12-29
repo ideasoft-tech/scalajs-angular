@@ -1,5 +1,5 @@
 <!--TITULO -->
-<h1 class="ui header field">{{uiModel.name}}</h1>
+<div class="ui header field">{{uiModel.name}}</div>
 
 <!-- DESCRIPCION -->
 
@@ -13,7 +13,7 @@
 
 <div class="ui vertical segment red field">
 
-    <h5 class="ui top header">Headers</h5>
+    <div class="ui top header">Headers</div>
 
     <div class="ui form">
         <div class="three fields" ng-repeat="headers in uiModel.headers">
@@ -48,7 +48,7 @@
     <div class="field" ng-include="'./views/payloadXML.html'" ng-init="payload=item" ng-show="item.uiType()=='payloadXML'"></div>
 
     <div class="field ui form vertical segment red" ng-show="item.uiType()=='panel'">
-        <h5 class="ui header">{{item.label}}</h5>
+        <div class="ui header">{{item.label}}</div>
         <div class="field" ng-repeat="panelItem in item.content">
 
             <div class="field" ng-include="'./views/textfield.html'" ng-show="panelItem.uiType()=='textfield'" ng-init="data=panelItem"></div>

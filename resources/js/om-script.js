@@ -13,3 +13,7 @@ function headerClick(cmp){
 
 
 $('.menu .item').tab();
+$('.ui.radio.checkbox').checkbox();
+
+
+
