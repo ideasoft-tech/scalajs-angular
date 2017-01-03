@@ -13,6 +13,8 @@
 
     <div class="field" ng-include="'./views/textfield.html'" ng-show="item.uiType()=='textfield'" ng-init="data=item"></div>
 
+    <div class="field" ng-include="'./views/textarea.html'" ng-show="item.uiType()=='textarea'" ng-init="data=item"></div>
+
     <div class="field" ng-include="'./views/description.html'" ng-show="item.uiType()=='description'" ng-init="data=item"></div>
 
     <div class="field" ng-include="'./views/file.html'" ng-show="item.uiType()=='file'" ng-init="data=item"></div>

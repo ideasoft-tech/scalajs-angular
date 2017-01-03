@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA;aACc;EACV,MAAM,EAAE,OAAO;EACf,WAAW,EAAE,MAAM;;AAItB,qBAAqB;EACpB,KAAK,EAAE,KAAK",
+"mappings": "AAAA;;aAEc;EACV,MAAM,EAAE,OAAO;EACf,WAAW,EAAE,MAAM;;AAItB,qBAAqB;EACpB,KAAK,EAAE,KAAK",
 "sources": ["om-style.scss"],
 "names": [],
 "file": "om-style.css"

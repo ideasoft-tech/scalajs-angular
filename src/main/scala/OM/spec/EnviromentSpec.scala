@@ -43,6 +43,7 @@ object EnviromentSpec {
         new Panel(
           label = "Campos Requeridos",
           content = js.Array(
+            new Textarea("Textarea", "textarea", RequestBind.PARAMETER),
             new Textfield("Nombre del recurso", "resourceName", RequestBind.PARAMETER)
           )
         ),

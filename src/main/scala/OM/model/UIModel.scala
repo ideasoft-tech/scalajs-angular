@@ -42,6 +42,13 @@ class Textfield(label: String, key: String, requestBind: String)
 
 }
 
+@JSExportAll
+class Textarea(label: String, key: String, requestBind: String)
+  extends UIModel(label, key, requestBind) {
+
+  override def uiType(): String = "textarea"
+
+}
 
 @JSExportAll
 class Description(label: String, key: String, requestBind: String)
