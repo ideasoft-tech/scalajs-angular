@@ -94,8 +94,29 @@ class Panel(label: String, var content: js.Array[UIModel])
     case t: Panel => t.filter(f)
     case t: UIModel => if (f(t)) js.Array(t) else Nil
   })
+
+
 }
 
+@JSExportAll
+class HeaderPanel(v: js.Dictionary[String]) extends UIModel("Headers", null, null) {
+
+  var hash: js.Dictionary[String] = v
+  private var counter: Int = 0
+
+  override def uiType(): String = "header-panel"
+
+  def getHash = hash
+
+  def addRow() = {
+    hash.put(s"name$counter", "")
+    counter += 1
+  }
+
+  def removeKey(key: String) = {
+    hash.delete(key)
+  }
+}
 
 @JSExportAll
 class OMModel(
@@ -105,13 +126,17 @@ class OMModel(
                var soapName: String,
                var definitionPath: String,
                var description: String,
-               var headers: js.Array[HeaderModel],
                var requiredFields: js.Array[UIModel]
              ) {
 
   def getID = soapName
 
-  def getFixedHeaders = headers.map(p => p.key -> p.value).toMap
+  def getFixedHeaders = requiredFields.flatMap({
+    case t: HeaderPanel => t.getHash
+    case t: Panel => t.filter(fixedHeaders).flatMap {
+      case t: HeaderPanel => t.getHash
+    }.toMap
+  }).toMap
 
   def getPayloadComponent = {
 
@@ -131,7 +156,12 @@ class OMModel(
   def getHeaders = requiredFields.flatMap({
     case t: Panel => t.filter(headersFilter)
     case t: UIModel => if (headersFilter(t)) js.Array(t) else Nil
-  })
+  }).map(m => m.key -> m.value).toMap
+
+  private def fixedHeaders(p: UIModel) = p match {
+    case t: HeaderPanel => true
+    case _ => false
+  }
 
   private def parameterFilter(p: UIModel) = p.isParameter
 

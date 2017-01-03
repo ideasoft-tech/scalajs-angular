@@ -1,7 +1,7 @@
-package OM.model
-
+package OM.spec
 
 import OM.model.ApiClient.{BasicEnvironment, ConfigMetadata}
+import OM.model._
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll
@@ -38,18 +38,17 @@ object EnviromentSpec {
       soapName = "getDataResourceById",
       definitionPath = "OMAdmin/Catálogos/",
       description = "Obtiene el xml que representa el data resource especificado en el parametro resourceName",
-      headers = js.Array(
-        new HeaderModel("Content-Type", "application/xml")
-      ),
       requiredFields = js.Array(
+
         new Panel(
           label = "Campos Requeridos",
           content = js.Array(
             new Textfield("Nombre del recurso", "resourceName", RequestBind.PARAMETER)
           )
         ),
+
         new Panel(
-          label = "Payload",
+          label = "Datos del recurso",
           content = js.Array(
             new PayloadXML(
               "",
@@ -65,7 +64,9 @@ object EnviromentSpec {
               )
             )
           )
-        )
+        ),
+
+        new HeaderPanel(js.Dictionary("Content-Type" -> "application/xml"))
       )
     ),
     new OMModel(
@@ -75,16 +76,18 @@ object EnviromentSpec {
       soapName = "addDataResourcePayLoad",
       definitionPath = "OMAdmin/Catálogos/",
       description = "Agrega un payload a la version especificada en el parámetro versionId del padre especificado en el parámetro resourceName. ",
-      headers = js.Array(
-        new HeaderModel("Content-Type", "multipart/form-data")
-      ),
       requiredFields = js.Array(
-        new Textfield("Nombre de recurso", "resourceName", RequestBind.PARAMETER),
-        new Textfield("Versión ID", "versionId", RequestBind.PARAMETER),
-        new File(
-          label = "",
-          key = "",
-          RequestBind.BODY
+        new Panel(
+          "Compos requeridos",
+          js.Array(
+            new Textfield("Nombre de recurso", "resourceName", RequestBind.PARAMETER),
+            new Textfield("Versión ID", "versionId", RequestBind.PARAMETER),
+            new File(
+              label = "",
+              key = "",
+              RequestBind.BODY
+            )
+          )
         )
       )
     )

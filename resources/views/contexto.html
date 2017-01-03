@@ -1,19 +1,17 @@
-<div class="ui header"> Contexto</div>
+<div class="ui top attached large label ">Contexto</div>
+<div class="ui two columns doubling stackable grid container form" ng-repeat="group in contextModel.getGroups">
 
-<div class="ui form">
-    <div class="field">
-        <label>Grupo</label>
-        <select class="ui search dropdown" ng-model="groupSelected">
-            <option ng-repeat="group in contextModel.getGroups" value="{{group}}">{{group}}</option>
-        </select>
+    <div class="column grouped fields">
+        <div class="field ui radio checkbox">
+            <input type="radio" name="group" ng-checked="group==groupSelected" ng-click="controller.setGroup(group)">
+            <label>{{group}}</label>
+        </div>
     </div>
-    <div class="grouped fields">
-        <label>Ambientes</label>
-        <div class="field ui radio checkbox" ng-repeat="env in contextModel.getEnvs(groupSelected)">
 
-            <input type="radio" name="env" ng-checked="$index==0" ng-click="controller.setEnv(env)">
+    <div class="column grouped fields">
+        <div class="field ui radio checkbox" ng-repeat="env in contextModel.getEnvs(group)">
+            <input type="radio" name="{{group}}" ng-checked="$index==0" ng-click="controller.setEnv(group, env)">
             <label>{{env}}</label>
-
         </div>
     </div>
 

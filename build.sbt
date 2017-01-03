@@ -20,5 +20,5 @@ jsDependencies ++= Seq(
 )
 
 val a = project.in(file("."))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
 

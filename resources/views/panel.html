@@ -1,0 +1,22 @@
+<div class="field ui form top attached segment blue" >
+    <div class="ui top attached large label">
+        {{panelData.label}}
+        <i class="hide link icon" onclick="$(this).parent().parent().children('.field').toggle()"></i>
+    </div>
+
+    <div class="field" ng-repeat="panelItem in panelData.content">
+
+        <div class="field" ng-include="'./views/textfield.html'" ng-show="panelItem.uiType()=='textfield'" ng-init="data=panelItem"></div>
+
+        <div class="field" ng-include="'./views/description.html'" ng-show="panelItem.uiType()=='description'" ng-init="data=panelItem"></div>
+
+        <div class="field" ng-include="'./views/file.html'" ng-show="panelItem.uiType()=='file'" ng-init="data=panelItem"></div>
+
+        <div class="field" ng-include="'./views/combobox.html'" ng-show="panelItem.uiType()=='combobox'" ng-init="data=panelItem"></div>
+
+        <div class="field" ng-include="'./views/payloadXML.html'" ng-show="panelItem.uiType()=='payloadXML'" ng-init="payload=panelItem"></div>
+
+        <div class="field" ng-include="'./views/header-panel.html'" ng-init="panelData=panelItem" ng-show="panelItem.uiType()=='header-panel'"></div>
+
+    </div>
+</div>

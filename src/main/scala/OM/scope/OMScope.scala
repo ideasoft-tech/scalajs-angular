@@ -17,6 +17,9 @@ trait OMScope extends Scope {
   var groupSelected: String = js.native
   var envSelected: String = js.native
 
+  // ESTADOS
+  var conextMap: js.Dictionary[js.Array[String]] = js.native
+
   // para manejar los distintos templates
   var templateURL: String = js.native
 
@@ -37,5 +40,8 @@ trait OMScope extends Scope {
   var plainResult: String = js.native
   var formatResult: String = js.native
   var detailsResult: String = js.native
+
+  // TABS
+
 
 }

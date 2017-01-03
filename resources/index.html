@@ -16,56 +16,57 @@
 
 <body>
 
-<div class="ui inverted segment attached">
-    <h3 class="ui header">OM Client</h3>
-</div>
 
-<div class="ui grid padded" ng-controller="userDetailsCtrl">
+<div class="" ng-controller="userDetailsCtrl">
     <div class="ui active dimmer" ng-show="activeLoader">
         <div class="ui loader"></div>
     </div>
-
-    <div class="four wide column  ">
-
-        <div class="ui segment" ng-include="'./views/contexto.html'" ng-init="contextModel=context"></div>
-        <div class="ui segment" ng-init="menuData=menuSpec" ng-include="'./views/menu.html'"></div>
-
+    <div class="ui inverted segment attached">
+        <h3 class="ui header">OM Client</h3>
     </div>
+    <div class="ui doubling padded stackable grid">
 
-    <div class="nine wide column ">
-
-        <div class="ui top attached tabular menu">
-            <a class="active item" data-tab="firstTab">Definición</a>
-            <a class="item" data-tab="secondTab">Resultado</a>
+        <div class="four wide column  ">
+                <div class="ui top attached segment black" ng-include="'./views/contexto.html'" ng-init="contextModel=context"></div>
+                <div class="ui top attached segment black" ng-init="menuData=menuSpec" ng-include="'./views/menu.html'"></div>
         </div>
 
-        <div class="ui bottom attached active tab segment" data-tab="firstTab">
-
-            <div class="ui form ">
-                <div class="field" ng-show="serviceSelected!=undefined" ng-model="serviceSelected" ng-include="templateURL" onload="uiModel=serviceSelected"></div>
-
-                <button ng-click="controller.submitRequest()" class="ui primary button field">Enviar</button>
-            </div>
-
-        </div>
-        <div class="ui bottom attached tab segment" data-tab="secondTab">
+        <div class="nine wide column">
 
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="first">Formateado</a>
-                <a class="item" data-tab="second">Plano</a>
-                <a class="item" data-tab="third">Details</a>
-            </div>
-            <div class="ui bottom attached tab segment active" data-tab="first" style="overflow: auto;">
-                <pre>{{formatResult}}</pre>
-            </div>
-            <div class="ui bottom attached tab segment" data-tab="second" style="overflow: auto;">
-                <pre>{{plainResult}}</pre>
-            </div>
-            <div class="ui bottom attached tab segment" data-tab="third" style="overflow: auto;">
-                <pre>{{detailsResult}}</pre>
+                <a class="active item" data-tab="firstTab">Definición</a>
+                <a class="item" data-tab="secondTab">Resultado</a>
             </div>
 
+            <div class="ui bottom attached active tab segment" data-tab="firstTab">
+
+                <div class="ui form ">
+                    <div class="field" ng-show="serviceSelected!=undefined" ng-model="serviceSelected" ng-include="templateURL" onload="uiModel=serviceSelected"></div>
+
+                    <button ng-click="controller.submitRequest()" class="ui primary button field">Enviar</button>
+                </div>
+
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="secondTab">
+
+                <div class="ui top attached tabular menu">
+                    <a class="item active" data-tab="first">Formateado</a>
+                    <a class="item" data-tab="second">Plano</a>
+                    <a class="item" data-tab="third">Details</a>
+                </div>
+                <div class="ui bottom attached tab segment active" data-tab="first" style="overflow: auto;">
+                    <pre>{{formatResult}}</pre>
+                </div>
+                <div class="ui bottom attached tab segment" data-tab="second" style="overflow: auto;">
+                    <pre>{{plainResult}}</pre>
+                </div>
+                <div class="ui bottom attached tab segment" data-tab="third" style="overflow: auto;">
+                    <pre>{{detailsResult}}</pre>
+                </div>
+
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -76,9 +77,28 @@
 <script src="../target/scala-2.11/om-soap-fastopt.js"></script>
 <script src="angular.min.js"></script>
 <script src="./js/om-script.js"></script>
-
+<script type="text/javascript" src="/workbench.js"></script>
 <script !src="">
     OM.MainApp().main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 

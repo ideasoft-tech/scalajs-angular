@@ -1,0 +1,30 @@
+<div class="field ui top attached segment red">
+
+    <div class="ui top attached large label">
+        {{panelData.label}}
+        <i class="hide link icon" onclick="$(this).parent().parent().children('.om-hide').toggle()"></i>
+    </div>
+
+    <div class="om-hide" style="display:none;">
+        <div class="ui form ">
+            <div class="three fields" ng-repeat="(k,v) in panelData.getHash">
+                <div class="field ">
+                    <div class="ui small input">
+                        <input type="text" ng-model="k">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui small input">
+                        <input type="text" ng-model="v">
+                    </div>
+                </div>
+                <button class="ui icon button mini blue" ng-click="panelData.removeKey(k)">
+                    Remover
+                </button>
+            </div>
+        </div>
+        <button class="ui button mini blue" ng-click="panelData.addRow()">
+            Agregar
+        </button>
+    </div>
+</div>

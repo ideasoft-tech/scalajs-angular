@@ -1,6 +1,7 @@
 package OM
 
 import OM.controller.OMController
+import OM.utils.OMServicesFactory
 import com.greencatsoft.angularjs.Angular
 
 import scala.scalajs.js.JSApp
@@ -17,9 +18,8 @@ object MainApp extends JSApp {
     val mod = Angular.module("om-app")
 
     mod.controller[OMController]
-
+    mod.factory[OMServicesFactory]
   }
-
 
 }
 

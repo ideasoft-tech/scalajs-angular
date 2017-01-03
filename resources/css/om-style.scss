@@ -1,4 +1,10 @@
-.menu-leaf,
-.header {
+.om-tree-node,
+.om-tree-leaf {
     cursor: pointer;
+    white-space: nowrap;
 }
+
+
+ .attached.label .hide{
+ 	float: right;
+ }

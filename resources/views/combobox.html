@@ -1,4 +1,8 @@
-<div>{{data.label}}</div>
-<select class="form-control" ng-model="data.value">
-    <option ng-repeat="item in data.values" value="{{item[1]}}">{{item[0]}}</option>
-</select>
+<div>
+    <div class="header">{{data.label}}</div>
+    <div class="ui small input ">
+        <select class="" ng-model="data.value">
+            <option ng-repeat="item in data.values" value="{{item[1]}}">{{item[0]}}</option>
+        </select>
+    </div>
+</div>
